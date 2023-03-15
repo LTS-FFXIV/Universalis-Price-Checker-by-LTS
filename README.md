@@ -33,8 +33,19 @@ This command will fetch and display the minimum and maximum prices for the speci
 To customize the minimum and maximum prices for each server, open the plugin settings by right-clicking the plugin in the Dalamud plugin installer and selecting "Settings."
 
 # Planned Features
-Adding functionality to see the most commonly purchased items over the last few days.
-Other stuff idk
+Display price data in the UI: Show the price range and number of listings for each selected server directly in the plugin UI, making it more convenient for users to view and compare the data without checking the logs.
+
+Data visualization: Create graphs or charts to display the price distribution for an item across different servers, allowing users to get a better understanding of the market at a glance.
+
+Price alerts: Implement a feature that sends notifications to users when an item's price falls within a specified range on their selected servers. This can help users track and capitalize on market trends.
+
+Item watchlist: Allow users to maintain a list of items they want to track, automatically updating and displaying relevant price data for those items.
+
+Historical price data: Retrieve and display historical price data for items, helping users to understand price fluctuations and trends over time.
+
+Integration with in-game markets: If possible, integrate the plugin with the in-game market board, allowing users to directly access Universalis price data when browsing the market.
+
+Server-wide price comparison: Provide an overview of an item's price on all available servers, giving users a broader understanding of the market and enabling them to make informed buying or selling decisions.
 
 ## Contributing
 
