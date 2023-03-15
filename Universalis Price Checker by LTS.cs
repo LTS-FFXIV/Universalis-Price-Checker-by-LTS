@@ -1,7 +1,7 @@
 import requests
 import time
 from functools import lru_cache
-from typing import Dict, Tuple
+from typing import Dict, Tuple, List
 from xivapi import Client
 from pydantic import BaseModel
 from urllib.parse import quote
@@ -26,7 +26,9 @@ class ServerPrices(BaseModel):
 
 class UniversalisPriceChecker(Plugin):
     Name = "Universalis Price Checker"
-    pluginInterface: 'DalamudPluginInterface'
+    from Dalamud.Plugin import DalamudPluginInterface
+
+    pluginInterface: DalamudPluginInterface
     commandManager: PluginCommandManager
     xivapi: Client
     searchInput: str = ""
@@ -67,7 +69,6 @@ class UniversalisPriceChecker(Plugin):
             self.commandManager.Execute(f"/upc {self.searchInput}")
 
         ImGui.End()
-        self.config_ui.draw()
 
     @PluginCommand("/upc")
     def check_price(self, args: List[str]) -> None:
@@ -113,7 +114,7 @@ class UniversalisPriceChecker(Plugin):
                     continue
 
                 endpoint = f"https://universalis.app/api/{server}/market/{encoded_name}"
-                response = requests.get(endpoint)
+                with requests.get(endpoint) as response:
 
                 if not response.ok:
                     continue
