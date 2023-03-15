@@ -1,0 +1,17 @@
+{
+  "Plugins": [
+    {
+      "Name": "Universalis Price Checker",
+      "Author": "LTS-FFXIV",
+      "InternalName": "UniversalisPriceChecker",
+      "AssemblyVersion": "1.0.0",
+      "Description": "A plugin to check item prices on Universalis",
+      "Tags": ["universalis", "price", "market"],
+      "ApplicableVersion": ">=5.1",
+      "DownloadLink": "https://github.com/LTS-FFXIV/UniversalisPriceChecker/releases/download/v1.0.0/UniversalisPriceChecker.dll",
+      "RepoUrl": "https://github.com/LTS-FFXIV/UniversalisPriceChecker",
+      "IsHide": false,
+      "IsTestingExclusive": false
+    }
+  ]
+}
