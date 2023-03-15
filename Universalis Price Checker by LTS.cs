@@ -67,6 +67,7 @@ class UniversalisPriceChecker(Plugin):
             self.commandManager.Execute(f"/upc {self.searchInput}")
 
         ImGui.End()
+        self.config_ui.draw()
 
     @PluginCommand("/upc")
     def check_price(self, args: List[str]) -> None:
@@ -94,7 +95,7 @@ class UniversalisPriceChecker(Plugin):
         
     @lru_cache(maxsize=CACHE_SIZE)
     def get_item_info(self, item_id: int) -> Dict[str, Dict[str, int]]:
-            current_time = time.time()
+        current_time = time.time()
         time_since_last_call = current_time - self.last_api_call
 
         if time_since_last_call < API_CALL_INTERVAL:
@@ -157,40 +158,40 @@ class UniversalisPriceChecker(Plugin):
     }
     self.pluginInterface.SavePluginConfig(config)
 
-def on_draw(self):
-    self.draw_ui()
+    def on_draw(self):
+        self.draw_ui()
 
-def on_open_config(self):
-    self.pluginInterface.Framework.Gui.SaveWindowSettings()
-    self.pluginInterface.Framework.GuiBuilder.Menu()
-    if ImGui.BeginPopupModal("Universalis Price Checker Settings", None, ImGuiWindowFlags.AlwaysAutoResize):
-        ImGui.Text("Select minimum and maximum prices for each server.")
-        ImGui.Spacing()
+    def on_open_config(self):
+        self.pluginInterface.Framework.Gui.SaveWindowSettings()
+        self.pluginInterface.Framework.GuiBuilder.Menu()
+        if ImGui.BeginPopupModal("Universalis Price Checker Settings", None, ImGuiWindowFlags.AlwaysAutoResize):
+            ImGui.Text("Select minimum and maximum prices for each server.")
+            ImGui.Spacing()
 
-        for server, prices in self.selectedServers.items():
-            ImGui.Text(server)
+            for server, prices in self.selectedServers.items():
+                ImGui.Text(server)
 
-            ImGui.SameLine(ImGui.GetWindowWidth() * 0.5)
+                ImGui.SameLine(ImGui.GetWindowWidth() * 0.5)
 
-            ImGui.InputInt(f"Min##{server}", prices.min_price, 10000, 1000000)
-            ImGui.SameLine()
+                ImGui.InputInt(f"Min##{server}", prices.min_price, 10000, 1000000)
+                ImGui.SameLine()
 
-            ImGui.InputInt(f"Max##{server}", prices.max_price, 10000, 1000000)
+                ImGui.InputInt(f"Max##{server}", prices.max_price, 10000, 1000000)
 
-        if ImGui.Button("Save", (50, 0)):
-            self.save_configuration()
-            ImGui.CloseCurrentPopup()
+            if ImGui.Button("Save", (50, 0)):
+                self.save_configuration()
+                ImGui.CloseCurrentPopup()
 
-        ImGui.EndPopup()
+            ImGui.EndPopup()
 
-def on_initialize(self):
-    self.load_configuration()
-    self.pluginInterface.Framework.GuiBuilder.OnOpenConfig += self.on_open_config
-    self.pluginInterface.Framework.GuiBuilder.OnDraw += self.on_draw
-    self.pluginInterface.Framework.OnUpdateEvent += self.on_update_event
+    def on_initialize(self):
+        self.load_configuration()
+        self.pluginInterface.Framework.GuiBuilder.OnOpenConfig += self.on_open_config
+        self.pluginInterface.Framework.GuiBuilder.OnDraw += self.on_draw
+        self.pluginInterface.Framework.OnUpdateEvent += self.on_update_event
 
-def on_update_event(self, _):
-    pass
+    def on_update_event(self, _):
+        pass
 
-def on_shutdown(self):
-    self.dispose()
+    def on_shutdown(self):
+        self.dispose()
