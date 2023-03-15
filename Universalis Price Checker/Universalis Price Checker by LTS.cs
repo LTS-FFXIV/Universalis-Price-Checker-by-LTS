@@ -1,4 +1,8 @@
-import requests
+internal class Program
+{
+    private static global::System.Int32 Main(string[] args)
+    {
+        import requests
 import time
 from functools import lru_cache
 from typing import Dict, Tuple, List
@@ -19,12 +23,10 @@ from Dalamud.Plugin import Plugin, PluginCommand, PluginCommandManager
 CACHE_SIZE = 100
 API_CALL_INTERVAL = 5  # In seconds
 
-class ServerPrices(BaseModel):
+BaseModel:
     min_price: int = 0
     max_price: int = 0
-
-
-class UniversalisPriceChecker(Plugin):
+Plugin:
     Name = "Universalis Price Checker"
     from Dalamud.Plugin import DalamudPluginInterface
 
@@ -33,7 +35,7 @@ class UniversalisPriceChecker(Plugin):
     xivapi: Client
     searchInput: str = ""
     selectedServers: Dict[str, ServerPrices] = {
-        "Aether": ServerPrices(),
+            "Aether": ServerPrices(),
         "Crystal": ServerPrices(),
         "Dynamis": ServerPrices(),
         "Primal": ServerPrices(),
@@ -94,7 +96,7 @@ class UniversalisPriceChecker(Plugin):
         inventory = self.pluginInterface.ClientState.LocalPlayer.inventory
         return next((item for item in inventory if item.Name.lower() == name.lower()), None)
         
-    @lru_cache(maxsize=CACHE_SIZE)
+    @lru_cache(maxsize = CACHE_SIZE)
     def get_item_info(self, item_id: int) -> Dict[str, Dict[str, int]]:
         current_time = time.time()
         time_since_last_call = current_time - self.last_api_call
@@ -104,12 +106,13 @@ class UniversalisPriceChecker(Plugin):
             return None
 
         self.last_api_call = current_time
-        
+
+
         try:
             item_name = self.xivapi.indexes("Item").ids(item_id)[0].name
             encoded_name = quote(item_name)
-            item_info = {}
-            for server, prices in self.selectedServers.items():
+            item_info = { }
+        for server, prices in self.selectedServers.items():
                 if prices.min_price == 0 and prices.max_price == 0:
                     continue
 
@@ -120,9 +123,9 @@ class UniversalisPriceChecker(Plugin):
                     continue
 
                 data = response.json()
-                item_info[server] = {"min_price": data["listings"][0]["pricePerUnit"], "max_price": data["listings"][-1]["pricePerUnit"]}
+                item_info[server] = { "min_price": data["listings"][0]["pricePerUnit"], "max_price": data["listings"][-1]["pricePerUnit"]}
 
-            return item_info
+        return item_info
         except Exception as e:
             self.pluginInterface.Framework.Gui.Chat.PrintError(f"Could not fetch price information: {str(e)}")
             return None
@@ -157,7 +160,7 @@ class UniversalisPriceChecker(Plugin):
             "PrimalMinPrice": self.selectedServers["Primal"].min_price,
             "PrimalMaxPrice": self.selectedServers["Primal"].max_price,
     }
-    self.pluginInterface.SavePluginConfig(config)
+        self.pluginInterface.SavePluginConfig(config)
 
     def on_draw(self):
         self.draw_ui()
@@ -196,3 +199,9 @@ class UniversalisPriceChecker(Plugin):
 
     def on_shutdown(self):
         self.dispose()
+}
+}
+
+class ServerPrices
+
+class UniversalisPriceChecker
