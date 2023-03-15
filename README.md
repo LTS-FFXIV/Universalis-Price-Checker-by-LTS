@@ -8,7 +8,6 @@ Universalis Price Checker is a plugin for Final Fantasy XIV that utilizes the Da
 - Check item prices with a right-click context menu in the inventory
 - Search for item prices using a plugin UI window
 - Customizable minimum and maximum prices for each server
-- Caching and rate limiting to prevent excessive API calls
 
 ## Manual Installation
 
@@ -32,6 +31,10 @@ To search for an item using the plugin UI, use the `/upc` command followed by th
 This command will fetch and display the minimum and maximum prices for the specified item across the selected servers.
 
 To customize the minimum and maximum prices for each server, open the plugin settings by right-clicking the plugin in the Dalamud plugin installer and selecting "Settings."
+
+# Planned Features
+Adding functionality to see the most commonly purchased items over the last few days.
+Other stuff idk
 
 ## Contributing
 
