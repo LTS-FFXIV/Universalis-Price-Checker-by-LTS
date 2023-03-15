@@ -42,4 +42,4 @@ Contributions to the Universalis Price Checker plugin are welcome! If you'd like
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+Idk probably MIT license
