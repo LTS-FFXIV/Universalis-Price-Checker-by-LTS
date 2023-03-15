@@ -1,4 +1,6 @@
 import requests
+import time
+from functools import lru_cache
 from typing import Dict, Tuple
 from xivapi import Client
 from pydantic import BaseModel
@@ -14,6 +16,8 @@ from Dalamud.Game.ClientState.Objects.SubKinds import InventoryItem
 from Dalamud.Game.Gui import ImGui, ItemContextMenu
 from Dalamud.Plugin import Plugin, PluginCommand, PluginCommandManager
 
+CACHE_SIZE = 100
+API_CALL_INTERVAL = 5  # In seconds
 
 class ServerPrices(BaseModel):
     min_price: int = 0
@@ -32,6 +36,7 @@ class UniversalisPriceChecker(Plugin):
         "Dynamis": ServerPrices(),
         "Primal": ServerPrices(),
     }
+    last_api_call: float = 0
 
     def __init__(self, pluginInterface: 'DalamudPluginInterface'):
         super().__init__(pluginInterface)
@@ -86,8 +91,18 @@ class UniversalisPriceChecker(Plugin):
     def get_item_by_name(self, name: str) -> InventoryItem:
         inventory = self.pluginInterface.ClientState.LocalPlayer.inventory
         return next((item for item in inventory if item.Name.lower() == name.lower()), None)
-
+        
+    @lru_cache(maxsize=CACHE_SIZE)
     def get_item_info(self, item_id: int) -> Dict[str, Dict[str, int]]:
+            current_time = time.time()
+        time_since_last_call = current_time - self.last_api_call
+
+        if time_since_last_call < API_CALL_INTERVAL:
+            self.pluginInterface.Framework.Gui.Chat.PrintError(f"Please wait {API_CALL_INTERVAL - time_since_last_call:.1f} seconds before checking prices again.")
+            return None
+
+        self.last_api_call = current_time
+        
         try:
             item_name = self.xivapi.indexes("Item").ids(item_id)[0].name
             encoded_name = quote(item_name)
