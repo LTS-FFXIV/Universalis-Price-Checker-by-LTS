@@ -19,7 +19,7 @@ jobs:
         python-version: '3.x'
 
     - name: Install Python dependencies
-      run: pip install requests pydantic xivapi pythonnet
+      run: pip install requests pydantic pyxivapi pythonnet
 
     - name: Run build script
       run: python build.py
